@@ -81,10 +81,6 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
 
   return (
     <Box sx={{ maxWidth: 400, mx: "auto", mt: 4 }}>
-      <Typography variant="h5" gutterBottom>
-        ユーザー情報編集
-      </Typography>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label="名前"
