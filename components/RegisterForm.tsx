@@ -51,19 +51,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
           label="名前"
           {...register("name", { required: "名前は必須です" })}
           helperText={errors.name?.message}
+          fullWidth
+          margin="normal"
         />
         <TextField
           label="メール"
           {...register("email", { required: "メールは必須です" })}
           helperText={errors.email?.message}
+          fullWidth
+          margin="normal"
         />
         <TextField
           label="役職"
           {...register("role", { required: "役職は必須です" })}
           helperText={errors.role?.message}
+          fullWidth
+          margin="normal"
         />
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary" fullWidth>
           登録
         </Button>
       </form>
