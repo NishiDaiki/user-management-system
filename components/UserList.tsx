@@ -1,8 +1,8 @@
 "use client";
 
-import { Typography } from "@mui/material";
 import UserCard from "./UserCard";
 import { User } from "../types/User";
+import { useState } from "react";
 
 //インターフェイス定義
 export interface UserListProps {
@@ -10,14 +10,18 @@ export interface UserListProps {
 }
 
 export default function UserList({ users }: UserListProps) {
+  //ユーザーをstate管理
+  const [usersList, setUsersList] = useState<User[]>(users);
+
+  //削除後の再レンダリング用関数
+  const handleDeleteUser = (id: number) => {
+    setUsersList((prev) => prev.filter((user) => user.id !== id));
+  };
+
   return (
     <>
-      <Typography variant="h5" gutterBottom>
-        ユーザー一覧
-      </Typography>
-
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+      {usersList.map((user) => (
+        <UserCard key={user.id} user={user} onDelete={handleDeleteUser} />
       ))}
     </>
   );
