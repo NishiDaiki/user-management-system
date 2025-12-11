@@ -13,8 +13,6 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   let color: ButtonProps["color"] = "primary";
 
-  // TODO: variantTypeに応じてcolorを変化させる
-  // colorに設定する色は調べて実装する
   switch (variantType) {
     case "primary":
       color = "primary";
@@ -28,9 +26,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   }
 
   return (
-    // TODO: <Button>の実装
-    // プロップスには[color][variant]を設定し、{...props}を最後に設定する
-    <></>
+    <Button color={color} {...props}>
+      {props.children}
+    </Button>
   );
 };
 
