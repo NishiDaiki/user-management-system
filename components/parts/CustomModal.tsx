@@ -3,6 +3,15 @@
 import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 
+//インターフェイスの定義
+export interface CustomModalProps {
+  open: boolean;
+  title: string;
+  content: string;
+  onClose: () => void;
+  onConfirm?: () => void;
+}
+
 const style = {
   position: "absolute" as const,
   top: "50%",
@@ -15,8 +24,13 @@ const style = {
   p: 4,
 };
 
-// TODO: propの設定
-const CustomModal: React.FC<CustomModalProps> = () => {
+const CustomModal: React.FC<CustomModalProps> = ({
+  open,
+  title,
+  content,
+  onClose,
+  onConfirm,
+}) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
