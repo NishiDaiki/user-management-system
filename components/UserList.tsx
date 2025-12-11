@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 import CustomButton from "./parts/CustomButton";
 import { softDeleteUser } from "@/utils/api";
+import CustomModal from "./parts/CustomModal";
 
 //インターフェイス定義
 export interface UserListProps {
@@ -17,17 +18,22 @@ export default function UserList({ users }: UserListProps) {
   //ユーザーをstate管理
   const [usersList, setUsersList] = useState<User[]>(users);
 
-  //削除後の再レンダリング用関数
-  const handleDeleteUser = async (id: number) => {
-    const ok = confirm("ホントにこのユーザーを削除しますか？");
+  //モーダル開閉するためのstate管理
+  const [open, setOpen] = useState(false);
 
-    if (!ok) return;
+  const [selectedId, setSlectedId] = useState<number | null>(null);
+
+  //削除処理
+  const handleDeleteUser = async () => {
+    if (selectedId == null) return;
 
     try {
-      await softDeleteUser(id);
-      setUsersList((prev) => prev.filter((user) => user.id !== id));
+      await softDeleteUser(selectedId);
+      setUsersList((prev) => prev.filter((user) => user.id !== selectedId));
     } catch (error) {
       console.error("削除に失敗:", error);
+    } finally {
+      setOpen(false);
     }
   };
 
@@ -68,7 +74,10 @@ export default function UserList({ users }: UserListProps) {
                 variantType="danger"
                 variant="outlined"
                 size="small"
-                onClick={() => handleDeleteUser(user.id)}
+                onClick={() => {
+                  setSlectedId(user.id);
+                  setOpen(true);
+                }}
               >
                 削除
               </CustomButton>
@@ -76,6 +85,13 @@ export default function UserList({ users }: UserListProps) {
           }
         />
       ))}
+      <CustomModal
+        open={open}
+        title="削除確認"
+        content="本当にこのユーザーを削除しますか？"
+        onClose={() => setOpen(false)}
+        onConfirm={handleDeleteUser}
+      ></CustomModal>
     </>
   );
 }
