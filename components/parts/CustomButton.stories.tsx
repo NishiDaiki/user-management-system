@@ -9,8 +9,10 @@ const meta: Meta<typeof CustomButton> = {
   tags: ["autodocs"],
 };
 
+//メタデータのエクスポート
 export default meta;
 
+//ストーリー型定義
 type Story = StoryObj<typeof CustomButton>;
 
 export const Primary: Story = {
